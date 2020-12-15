@@ -1,17 +1,16 @@
-import express from 'express';
-import dotenv from 'dotenv';
+import express from "express";
+import dotenv from "dotenv";
+import router from "./router";
 dotenv.config();
 
 const app = express();
 
-app.get('/api', function(req, res) {
-    res.send('Example');
-});
+app.use("/api", router);
 
-app.use(express.static('public'));
+app.use(express.static("public"));
 
-const port = 3000;
+const { PORT = 3000 } = process.env;
 
-app.listen(port);
+app.listen(PORT);
 
-console.log(`Server started on port ${port}`);
+console.log(`Server started on port ${PORT}`);
