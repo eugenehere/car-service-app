@@ -5,17 +5,22 @@ export default function authMiddleware(req: any, res: any, next: any) {
   const { JWT_SECRET } = process.env;
 
   if (!JWT_SECRET) return res.status(500).end();
-  if (!authorization) return res.status(401).end();
-
-  const match = authorization.match(/^Bearer (.*)$/);
-  if (!match) return res.status(401).end();
-  const token = match[1];
 
   try {
+    if (!authorization) {
+      throw new Error("Authorization required.");
+    }
+  
+    const match = authorization.match(/^Bearer (.*)$/);
+    if (!match) {
+      throw new Error("Invalid authorization token provided.");
+    }
+
+    const token = match[1];
     req.user = jwt.verify(token, JWT_SECRET);
     next();
   } catch (error) {
     console.log(error);
-    res.status(401).json({ message: error });
+    res.status(401).json({ ok: 0, message: error.message });
   }
 }
