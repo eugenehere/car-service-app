@@ -5,6 +5,7 @@ const {
     PG_USER,
     PG_PASSWORD,
     PG_DATABASE,
+    PG_PORT
 } = process.env;
 
 const pool = new Pool({
@@ -12,6 +13,7 @@ const pool = new Pool({
     user: PG_USER,
     password: PG_PASSWORD,
     database: PG_DATABASE,
+    port: PG_PORT
 });
 
 export default {
