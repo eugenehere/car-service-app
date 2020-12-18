@@ -1,10 +1,8 @@
 import jwt from "jsonwebtoken";
+import env from "../env";
 
 export default function authMiddleware(req: any, res: any, next: any) {
   const { authorization } = req.headers;
-  const { JWT_SECRET } = process.env;
-
-  if (!JWT_SECRET) return res.status(500).end();
 
   try {
     if (!authorization) {
@@ -16,8 +14,10 @@ export default function authMiddleware(req: any, res: any, next: any) {
       throw new Error("Invalid authorization token provided.");
     }
 
+    // check for user existance
+
     const token = match[1];
-    req.user = jwt.verify(token, JWT_SECRET);
+    req.user = jwt.verify(token, env.JWT_SECRET);
     next();
   } catch (error) {
     console.log(error);

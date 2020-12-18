@@ -1,16 +1,11 @@
-import express from "express";
-import dotenv from "dotenv";
-import router from "./router";
-dotenv.config();
+import app from "./app";
+import "reflect-metadata";
+import "./typeorm.connect";
+import env from "./env";
 
-const app = express();
+async function start() {
+    app.listen(env.PORT);
+    console.log(`Server started on port ${env.PORT}`);
+}
 
-app.use("/api", router);
-
-app.use(express.static("public"));
-
-const { PORT = 3000 } = process.env;
-
-app.listen(PORT);
-
-console.log(`Server started on port ${PORT}`);
+start();
