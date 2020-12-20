@@ -1,8 +1,11 @@
 import jwt from "jsonwebtoken";
+import { getRepository } from "typeorm";
+import { User } from "../entities/user.entity";
 import env from "../env";
 
-export default function authMiddleware(req: any, res: any, next: any) {
+export default async function authMiddleware(req: any, res: any, next: any) {
   const { authorization } = req.headers;
+  const userRepository = getRepository(User);
 
   try {
     if (!authorization) {
@@ -14,10 +17,16 @@ export default function authMiddleware(req: any, res: any, next: any) {
       throw new Error("Invalid authorization token provided.");
     }
 
-    // check for user existance
-
     const token = match[1];
-    req.user = jwt.verify(token, env.JWT_SECRET);
+    const payload: any = jwt.verify(token, env.JWT_SECRET);
+
+    if (!Number.isInteger(payload?.id)) throw new Error("Invalid token payload.");
+    if (!payload.username?.length) throw new Error("Invalid token payload.");
+
+    const user = await userRepository.findOne(payload.id);
+    if (!user) throw new Error("User not found.");
+
+    req.user = payload;
     next();
   } catch (error) {
     console.log(error);

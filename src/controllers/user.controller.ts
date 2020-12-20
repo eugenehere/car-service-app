@@ -7,9 +7,10 @@ export default class UserController {
     const userRepository = getRepository(User);
     try {
       const user = await userRepository.findOne(req.user.id);
+      if (!user) throw new Error("User not found.");
       res.status(200).json({ ok: 1, user });
     } catch (error) {
-      res.status(500).json({ ok: 0, message: error });
+      res.status(500).json({ ok: 0, message: error.message });
     }
   }
 
