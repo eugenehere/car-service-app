@@ -2,21 +2,21 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export default class Car {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    make: string;
+  @Column()
+  make: string;
 
-    @Column()
-    model: string;
+  @Column()
+  model: string;
 
-    @Column()
-    year: number;
+  @Column()
+  year: number;
 
-    @Column()
-    saloon: string;
+  @Column()
+  saloon: string;
 
-    @Column()
-    image: string;
+  @Column()
+  image: string;
 }

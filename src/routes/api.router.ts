@@ -5,9 +5,10 @@ import userRouter from "./user.router";
 import carRouter from "./car.router";
 import bodyParserMiddleware from "../middlewares/body-parser.middleware";
 
-export default express.Router()
-    .use(bodyParserMiddleware)
-    .use(authRouter)
-    .use(authMiddleware)
-    .use("/user", userRouter)
-    .use("/car", carRouter);
+export default express
+  .Router()
+  .use(bodyParserMiddleware)
+  .use(authRouter)
+  .use(authMiddleware)
+  .use("/user", userRouter)
+  .use("/car", carRouter);

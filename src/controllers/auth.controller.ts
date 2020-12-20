@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import bcrypt  from 'bcrypt';
+import bcrypt from "bcrypt";
 import env from "../env";
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
@@ -24,7 +24,7 @@ export default class AuthController {
         .addSelect("user.password")
         .where({ username })
         .getOne();
-      
+
       if (!user) throw new Error("User not found.");
 
       const matched = await bcrypt.compare(password, user.password);
@@ -36,9 +36,9 @@ export default class AuthController {
     try {
       const payload = {
         id: user.id,
-        username: user.username
+        username: user.username,
       };
-      const token = jwt.sign(payload, env.JWT_SECRET, { expiresIn: '1d' });
+      const token = jwt.sign(payload, env.JWT_SECRET, { expiresIn: "1d" });
       res.status(200).json({ ok: 1, token });
     } catch (error) {
       console.log(error);

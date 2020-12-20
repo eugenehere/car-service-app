@@ -11,7 +11,7 @@ export default async function authMiddleware(req: any, res: any, next: any) {
     if (!authorization) {
       throw new Error("Authorization required.");
     }
-  
+
     const match = authorization.match(/^Bearer (.*)$/);
     if (!match) {
       throw new Error("Invalid authorization token provided.");
@@ -20,7 +20,8 @@ export default async function authMiddleware(req: any, res: any, next: any) {
     const token = match[1];
     const payload: any = jwt.verify(token, env.JWT_SECRET);
 
-    if (!Number.isInteger(payload?.id)) throw new Error("Invalid token payload.");
+    if (!Number.isInteger(payload?.id))
+      throw new Error("Invalid token payload.");
     if (!payload.username?.length) throw new Error("Invalid token payload.");
 
     const user = await userRepository.findOne(payload.id);
