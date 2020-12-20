@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { getRepository } from "typeorm";
-import { User } from "../entities/user.entity";
+import User from "../entities/user.entity";
 import env from "../env";
 
 export default async function authMiddleware(req: any, res: any, next: any) {

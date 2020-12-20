@@ -4,7 +4,7 @@ import env from "../env";
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { getRepository } from "typeorm";
-import { User } from "../entities/user.entity";
+import User from "../entities/user.entity";
 
 export default class AuthController {
   static async signIn(req: Request, res: Response, next: NextFunction) {

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import { User } from '../entities/user.entity';
+import User from '../entities/user.entity';
 
 export default class UserController {
   static async get(req: Request, res: Response, next: NextFunction) {
